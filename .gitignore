@@ -1,0 +1,39 @@
+# .NET build outputs
+bin/
+obj/
+
+# User-specific files
+*.user
+*.suo
+*.userosscache
+*.sln.docstates
+
+# Visual Studio Code
+.vscode/
+
+# Rider
+.idea/
+
+# NuGet packages
+*.nupkg
+packages/
+.nuget/
+
+# Logs
+*.log
+
+# OS generated files
+Thumbs.db
+.DS_Store
+
+# Test results
+TestResults/
+*.trx
+
+# Build artifacts
+*.dll
+*.exe
+*.pdb
+
+# MassTransit specific
+MassTransitLogs/
