@@ -1,0 +1,126 @@
+version: "3.9"
+
+services:
+  rabbitmq:
+    image: rabbitmq:3.13-management
+    container_name: rabbitmq
+    ports:
+      - "5672:5672"
+      - "15672:15672"
+    environment:
+      RABBITMQ_DEFAULT_USER: guest
+      RABBITMQ_DEFAULT_PASS: guest
+    networks: [ demo-net ]
+
+  direct.producer:
+    build: { context: ., dockerfile: src/direct/Direct.Producer/Dockerfile }
+    depends_on: [ rabbitmq ]
+    environment:
+      RABBITMQ_HOST: rabbitmq
+      RABBITMQ_USERNAME: guest
+      RABBITMQ_PASSWORD: guest
+      RABBITMQ_VHOST: /
+    networks: [ demo-net ]
+
+  direct.consumer.a:
+    build: { context: ., dockerfile: src/direct/Direct.Consumer.A/Dockerfile }
+    depends_on: [ rabbitmq ]
+    environment:
+      RABBITMQ_HOST: rabbitmq
+      RABBITMQ_USERNAME: guest
+      RABBITMQ_PASSWORD: guest
+      RABBITMQ_VHOST: /
+    networks: [ demo-net ]
+
+  fanout.producer:
+    build: { context: ., dockerfile: src/fanout/Fanout.Producer/Dockerfile }
+    depends_on: [ rabbitmq ]
+    environment:
+      RABBITMQ_HOST: rabbitmq
+      RABBITMQ_USERNAME: guest
+      RABBITMQ_PASSWORD: guest
+      RABBITMQ_VHOST: /
+    networks: [ demo-net ]
+
+  fanout.consumer.1:
+    build: { context: ., dockerfile: src/fanout/Fanout.Consumer.1/Dockerfile }
+    depends_on: [ rabbitmq ]
+    environment:
+      RABBITMQ_HOST: rabbitmq
+      RABBITMQ_USERNAME: guest
+      RABBITMQ_PASSWORD: guest
+      RABBITMQ_VHOST: /
+    networks: [ demo-net ]
+
+  fanout.consumer.2:
+    build: { context: ., dockerfile: src/fanout/Fanout.Consumer.2/Dockerfile }
+    depends_on: [ rabbitmq ]
+    environment:
+      RABBITMQ_HOST: rabbitmq
+      RABBITMQ_USERNAME: guest
+      RABBITMQ_PASSWORD: guest
+      RABBITMQ_VHOST: /
+    networks: [ demo-net ]
+
+  topic.producer:
+    build: { context: ., dockerfile: src/topic/Topic.Producer/Dockerfile }
+    depends_on: [ rabbitmq ]
+    environment:
+      RABBITMQ_HOST: rabbitmq
+      RABBITMQ_USERNAME: guest
+      RABBITMQ_PASSWORD: guest
+      RABBITMQ_VHOST: /
+    networks: [ demo-net ]
+
+  topic.consumer.tech:
+    build: { context: ., dockerfile: src/topic/Topic.Consumer.Tech/Dockerfile }
+    depends_on: [ rabbitmq ]
+    environment:
+      RABBITMQ_HOST: rabbitmq
+      RABBITMQ_USERNAME: guest
+      RABBITMQ_PASSWORD: guest
+      RABBITMQ_VHOST: /
+    networks: [ demo-net ]
+
+  topic.consumer.finance:
+    build: { context: ., dockerfile: src/topic/Topic.Consumer.Finance/Dockerfile }
+    depends_on: [ rabbitmq ]
+    environment:
+      RABBITMQ_HOST: rabbitmq
+      RABBITMQ_USERNAME: guest
+      RABBITMQ_PASSWORD: guest
+      RABBITMQ_VHOST: /
+    networks: [ demo-net ]
+
+  headers.producer:
+    build: { context: ., dockerfile: src/headers/Headers.Producer/Dockerfile }
+    depends_on: [ rabbitmq ]
+    environment:
+      RABBITMQ_HOST: rabbitmq
+      RABBITMQ_USERNAME: guest
+      RABBITMQ_PASSWORD: guest
+      RABBITMQ_VHOST: /
+    networks: [ demo-net ]
+
+  headers.consumer.us:
+    build: { context: ., dockerfile: src/headers/Headers.Consumer.US/Dockerfile }
+    depends_on: [ rabbitmq ]
+    environment:
+      RABBITMQ_HOST: rabbitmq
+      RABBITMQ_USERNAME: guest
+      RABBITMQ_PASSWORD: guest
+      RABBITMQ_VHOST: /
+    networks: [ demo-net ]
+
+  headers.consumer.any:
+    build: { context: ., dockerfile: src/headers/Headers.Consumer.AnyPriority/Dockerfile }
+    depends_on: [ rabbitmq ]
+    environment:
+      RABBITMQ_HOST: rabbitmq
+      RABBITMQ_USERNAME: guest
+      RABBITMQ_PASSWORD: guest
+      RABBITMQ_VHOST: /
+    networks: [ demo-net ]
+
+networks:
+  demo-net: {}
